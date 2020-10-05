@@ -3,9 +3,15 @@ import axios from 'axios';
 import styled from "styled-components";
 import GlobalStyle from "./GlobalStyles";
 import Movie from "./Movie";
+import Loader from "./Loader";
 
-const container = styled.section`
-  
+const Container = styled.section`
+  margin-top: 50px;
+`;
+
+const Movies = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 function App() {
@@ -25,12 +31,10 @@ function App() {
   return (
     <div className="App">
       <GlobalStyle />
-      <section className="container">
+      <Container>
           {loading
-              ? <div className="loader">
-                  <span className="loader_text">Loading ... </span>
-                </div>
-              : <div className="movies">
+              ? <Loader />
+              : <Movies>
                   {movies.map(movie => (
                       <Movie key={movie.id}
                              id={movie.id}
@@ -41,9 +45,9 @@ function App() {
                              poster={movie.medium_cover_image}
                              genres={movie.genres} />
                   ))}
-              </div>
+              </Movies>
           }
-      </section>
+      </Container>
     </div>
   );
 }

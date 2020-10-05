@@ -2,14 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from "styled-components";
 
-const movie = styled.article`
-
+const MovieBlock = styled.div`
+  width: 29.3%;
+  margin: 0 2% 70px;
+  background: #fff;
+  @media screen and (max-width: 900px) {
+    width: 46%;
+    margin-bottom: 50px;
+  }
 `;
 
 function Movie({ id, year, title, summary, poster, genres, rating }) {
 
     return(
-        <div className="movie">
+        <MovieBlock>
             <article>
                 <img src={poster} alt={title} title={title} />
                 <div className="movie_data">
@@ -22,7 +28,7 @@ function Movie({ id, year, title, summary, poster, genres, rating }) {
                     <p className="movie_summary">{summary}</p>
                 </div>
             </article>
-        </div>
+        </MovieBlock>
     );
 }
 
