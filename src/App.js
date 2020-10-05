@@ -6,7 +6,7 @@ import Movie from "./Movie";
 import Loader from "./Loader";
 
 const Container = styled.section`
-  margin-top: 50px;
+  margin-top: 100px;
 `;
 
 const Movies = styled.div`
