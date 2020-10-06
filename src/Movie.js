@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from "styled-components";
-import { IoIosStar, IoIosStarOutline, IoIosStarHalf } from "react-icons/io";
+import { IoIosStar, IoIosStarOutline, IoIosStarHalf, IoIosMore } from "react-icons/io";
 
 const MovieBlock = styled.div`
   display: flex;
@@ -96,6 +96,7 @@ const Stars = styled.span`
 `;
 
 const MovieSummary = styled.dd`
+  font-size: 12px;
   font-weight: 300;
   color: gray;
   @media only screen and (min-width: 480px) {
@@ -112,24 +113,44 @@ const MovieSummary = styled.dd`
   }   
 `;
 
-function Movie({ id, year, title, summary, poster, genres, rating }) {
+const SummaryButton = styled.button`
+  position: relative;
+  top: 5px;
+  left: 10px;
+  width: 40px;
+  height: 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  color: gray;
+  background-color: #efefef;
+  cursor: pointer;
+  outline: none;
+`;
 
-        // 별점 기준 : 정수와 상관없이 소수점이 0.5가 넘으면 0.5로, 0.5가 안되면 0.0으로 취급한다. 예) 4.75 -> 4.5, 3.2 -> 3.0
-        const fiveStarRating = (rating/2);
-        const integer = Math.floor(fiveStarRating);
-        const decimal = ((fiveStarRating * 10) % 10 >= 5) ?  true : false;
+function Movie({ year, title, summary, poster, genres, rating }) {
 
-        let fullStars = [];
-        let emptyStars = [];
-        let count = integer;
+    // 별점 기준 : 정수와 상관없이 소수점이 0.5가 넘으면 0.5로, 0.5가 안되면 0.0으로 취급한다. 예) 4.75 -> 4.5, 3.2 -> 3.0
+    const fiveStarRating = (rating/2);
+    const integer = Math.floor(fiveStarRating);
+    const decimal = ((fiveStarRating * 10) % 10 >= 5) ?  true : false;
 
-        if(decimal === true) count += 1;
-        for (let i = 0; i < integer; i++){
-            fullStars.push('');
-        }
-        for (let i = 0; i < (5 - count); i++) {
-            emptyStars.push('');
-        }
+    let fullStars = [];
+    let emptyStars = [];
+    let count = integer;
+
+    if(decimal === true) count += 1;
+    for (let i = 0; i < integer; i++){
+        fullStars.push('');
+    }
+    for (let i = 0; i < (5 - count); i++) {
+        emptyStars.push('');
+    }
+
+    const [leftSummary, setLeftSummary] = useState(false);
+    const onClick = () => {
+        setLeftSummary(!leftSummary);
+    }
 
     return(
         <MovieBlock>
@@ -152,7 +173,14 @@ function Movie({ id, year, title, summary, poster, genres, rating }) {
                         </strong>
                     </MovieRating>
                     <MovieSummary>
-                        <p>{summary.slice(0, 200)}</p>
+                        <p>
+                            <span>{summary.slice(0, 200)}</span>
+                            {summary.length > 200 && !leftSummary &&
+                                <SummaryButton onClick={onClick}>
+                                    <IoIosMore />
+                                 </SummaryButton>}
+                            {leftSummary && summary.slice(201)}
+                        </p>
                     </MovieSummary>
                 </MovieData>
             </MovieArticle>
