@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from "styled-components";
+import { IoIosStar, IoIosStarOutline, IoIosStarHalf } from "react-icons/io";
 
 const MovieBlock = styled.div`
   display: flex;
@@ -55,28 +56,64 @@ const MovieTitle = styled.dt`
 `;
 
 const MovieYear = styled.dd`
+ margin-bottom: 5px;
   font-size: 15px;
   font-weight: 300;
 `;
 
 const MovieGenres = styled.dd`
   opacity: 0.8;
+  font-size: 15px;
   font-weight: 400;
+`;
+
+const MovieRating = styled.dd`
+  font-size: 16px;
+`;
+
+const Stars = styled.span`
+  margin-right: 5px;
+  font-size: 15px;
+  color: #ffc700;
+  //background: #ffc700;
+`;
+
+const MovieSummary = styled.dd`
   @media only screen and (min-width: 480px) {
-    font-size: 15px;
+    font-size: 14px;
   }
   @media only screen and (min-width: 768px) {
     font-size: 16px;
   }
   @media only screen and (min-width: 900px) {
-    font-size: 15px;
+    font-size: 14px;
   }
   @media only screen and (min-width: 1200px) {
     font-size: 16px;
-  }
+  }   
 `;
 
 function Movie({ id, year, title, summary, poster, genres, rating }) {
+
+        const stars = (rating/2);
+        const quotient = Math.floor(stars);
+        const remainer = ((stars * 10) % 10 < 5) ?  0.0 : 0.5; // 몫과 상관없이 소수점이 0.5가 넘으면 0.5로 만들고, 0.5가 안되면 0.0으로 만든다.
+
+        let fullStars = [];
+        let emptyStars = [];
+        let halfStar = false;
+        let count = quotient;
+
+        for (let i = 0; i < quotient; i++){
+            fullStars.push('');
+        }
+        if(remainer === 0.5) {
+            halfStar = true;
+            count += 1;
+        }
+        for (let i = 0; i < (5 - count); i++) {
+            emptyStars.push('');
+        }
 
     return(
         <MovieBlock>
@@ -88,8 +125,19 @@ function Movie({ id, year, title, summary, poster, genres, rating }) {
                     <MovieTitle>{title}</MovieTitle>
                     <MovieYear>{year}</MovieYear>
                     <MovieGenres>{genres.join(', ')}</MovieGenres>
-                    <strong className="movie_rating">{rating}</strong>
-                    <p className="movie_summary">{summary}</p>
+                    <MovieRating>
+                        <Stars>
+                            {fullStars.map((star, index) => (<IoIosStar key={index} />))}
+                            {halfStar && <IoIosStarHalf />}
+                            {emptyStars.map((star, index) => (<IoIosStarOutline key={index} />))}
+                        </Stars>
+                        <strong>
+                            {rating}
+                        </strong>
+                    </MovieRating>
+                    <MovieSummary>
+                        <p>{summary}</p>
+                    </MovieSummary>
                 </MovieData>
             </MovieArticle>
         </MovieBlock>
