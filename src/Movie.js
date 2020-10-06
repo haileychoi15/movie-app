@@ -75,7 +75,6 @@ const Stars = styled.span`
   margin-right: 5px;
   font-size: 15px;
   color: #ffc700;
-  //background: #ffc700;
 `;
 
 const MovieSummary = styled.dd`
@@ -95,21 +94,18 @@ const MovieSummary = styled.dd`
 
 function Movie({ id, year, title, summary, poster, genres, rating }) {
 
-        const stars = (rating/2);
-        const quotient = Math.floor(stars);
-        const remainer = ((stars * 10) % 10 < 5) ?  0.0 : 0.5; // 몫과 상관없이 소수점이 0.5가 넘으면 0.5로 만들고, 0.5가 안되면 0.0으로 만든다.
+        // 별점 기준 : 정수와 상관없이 소수점이 0.5가 넘으면 0.5로, 0.5가 안되면 0.0으로 취급한다. 예) 4.75 -> 4.5, 3.2 -> 3.0
+        const fiveStarRating = (rating/2);
+        const integer = Math.floor(fiveStarRating);
+        const decimal = ((fiveStarRating * 10) % 10 >= 5) ?  true : false;
 
         let fullStars = [];
         let emptyStars = [];
-        let halfStar = false;
-        let count = quotient;
+        let count = integer;
 
-        for (let i = 0; i < quotient; i++){
+        if(decimal === true) count += 1;
+        for (let i = 0; i < integer; i++){
             fullStars.push('');
-        }
-        if(remainer === 0.5) {
-            halfStar = true;
-            count += 1;
         }
         for (let i = 0; i < (5 - count); i++) {
             emptyStars.push('');
@@ -128,7 +124,7 @@ function Movie({ id, year, title, summary, poster, genres, rating }) {
                     <MovieRating>
                         <Stars>
                             {fullStars.map((star, index) => (<IoIosStar key={index} />))}
-                            {halfStar && <IoIosStarHalf />}
+                            {decimal && <IoIosStarHalf />}
                             {emptyStars.map((star, index) => (<IoIosStarOutline key={index} />))}
                         </Stars>
                         <strong>
