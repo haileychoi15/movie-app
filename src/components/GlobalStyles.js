@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
   
-  ul {
+  ul,ol,li {
     list-style: none;
   }
   

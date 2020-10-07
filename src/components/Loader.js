@@ -2,11 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import { CgSpinner } from "react-icons/cg";
 
+const LoadingBlock = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 const LoadingCircle = styled.div`
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  width: 40px;
+  height: 40px;
   color: #000;
   font-size: 60px;
   animation-name: loading;
@@ -26,9 +34,11 @@ const LoadingCircle = styled.div`
 
 function Loader() {
     return (
-        <LoadingCircle>
-            <CgSpinner />
-        </LoadingCircle>
+        <LoadingBlock>
+            <LoadingCircle>
+                <CgSpinner />
+            </LoadingCircle>
+        </LoadingBlock>
     );
 }
 

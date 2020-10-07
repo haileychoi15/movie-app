@@ -10,10 +10,11 @@ const MovieBlock = styled.div`
   margin: 0 2% 70px;
   border-radius: 6px;
   background: #fff;
-  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.5);
-  transition: transform 150ms ease-in-out;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.3);
+  transition: all 250ms ease-in-out;
   &:hover{
-    transform: scale(1.05);
+    transform: translateY(-10px);
+    box-shadow: 0 18px 32px -5px rgba(50, 50, 93, 0.6);
   }         
               
   @media only screen and (min-width: 900px) {
