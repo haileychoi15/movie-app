@@ -22,7 +22,7 @@ const Li = styled.li`
   & + & {
     margin-left: 20px;
   }
-  & .nav_item {
+  & .nav_link {
     text-decoration: none;
     color: #000;
   }
@@ -33,10 +33,10 @@ function Navigation() {
         <Nav>
             <Ol>
                 <Li>
-                    <Link to="/" className="nav_item">Home</Link>
+                    <Link to="/" className="nav_link">Home</Link>
                 </Li>
                 <Li>
-                    <Link to="/about" className="nav_item">About</Link>
+                    <Link to="/about" className="nav_link">About</Link>
                 </Li>
             </Ol>
         </Nav>
