@@ -4,6 +4,7 @@ import styled from "styled-components";
 import GlobalStyle from "./GlobalStyles";
 import Movie from "./Movie";
 import Loader from "./Loader";
+import UpButton from "./UpButton";
 
 const Container = styled.section`
   margin-top: 100px;
@@ -19,7 +20,7 @@ function App() {
   const [movies, setMovies] = useState([]);
 
   const getMovies = async() => {
-      const {data: {data: { movies }}} = await axios.get('https://yts.mx/api/v2/list_movies.json?sort_by=rating');
+      const {data: {data: { movies }}} = await axios.get('https://yts.mx/api/v2/list_movies.json?sort_by=like_count');
       setMovies(movies);
       setLoading(false);
   }
@@ -27,6 +28,11 @@ function App() {
   useEffect(() => {
       getMovies().then();
   }, []);
+
+  const [scroll, setScroll] = useState(false);
+  window.addEventListener('scroll', () => {
+      window.scrollY > 500 ? setScroll(true) : setScroll(false);
+  });
 
   return (
     <div className="App">
@@ -48,6 +54,7 @@ function App() {
               </Movies>
           }
       </Container>
+      {scroll && <UpButton />}
     </div>
   );
 }

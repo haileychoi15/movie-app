@@ -11,6 +11,10 @@ const MovieBlock = styled.div`
   border-radius: 6px;
   background: #fff;
   box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.5);
+  transition: transform 150ms ease-in-out;
+  &:hover{
+    transform: scale(1.05);
+  }         
               
   @media only screen and (min-width: 900px) {
     width: 46%;
@@ -124,8 +128,6 @@ const SummaryButton = styled.button`
   font-size: 20px;
   color: gray;
   background-color: #efefef;
-  cursor: pointer;
-  outline: none;
 `;
 
 function Movie({ year, title, summary, poster, genres, rating }) {
@@ -133,13 +135,12 @@ function Movie({ year, title, summary, poster, genres, rating }) {
     // 별점 기준 : 정수와 상관없이 소수점이 0.5가 넘으면 0.5로, 0.5가 안되면 0.0으로 취급한다. 예) 4.75 -> 4.5, 3.2 -> 3.0
     const fiveStarRating = (rating/2);
     const integer = Math.floor(fiveStarRating);
-    const decimal = ((fiveStarRating * 10) % 10 >= 5) ?  true : false;
+    const decimal = ((fiveStarRating * 10) % 10 >= 5);
 
     let fullStars = [];
     let emptyStars = [];
-    let count = integer;
+    const count = decimal ? integer + 1 : integer;
 
-    if(decimal === true) count += 1;
     for (let i = 0; i < integer; i++){
         fullStars.push('');
     }
