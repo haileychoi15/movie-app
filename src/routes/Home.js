@@ -17,6 +17,7 @@ const Movies = styled.div`
 function Home() {
     const [loading, setLoading] = useState(true);
     const [movies, setMovies] = useState([]);
+    const [scroll, setScroll] = useState(false);
 
     const getMovies = async() => {
         const {data: {data: { movies }}} = await axios.get('https://yts.mx/api/v2/list_movies.json?sort_by=like_count');
@@ -24,14 +25,15 @@ function Home() {
         setLoading(false);
     }
 
-    useEffect(() => {
-        getMovies().then();
-    }, []);
-
-    const [scroll, setScroll] = useState(false);
     window.addEventListener('scroll', () => {
         window.scrollY > 500 ? setScroll(true) : setScroll(false);
     });
+
+    useEffect(() => {
+        getMovies().then(
+            () => setScroll(false)
+        );
+    }, []);
 
     return (
         <div className="Home">

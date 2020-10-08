@@ -23,7 +23,6 @@ const Li = styled.li`
     margin-left: 20px;
   }
   & .nav_link {
-    text-decoration: none;
     color: #000;
   }
 `;

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from "styled-components";
-import { IoIosStar, IoIosStarOutline, IoIosStarHalf, IoIosMore } from "react-icons/io";
+import { IoIosStar, IoIosStarOutline, IoIosStarHalf } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const MovieBlock = styled.div`
   display: flex;
@@ -24,9 +25,10 @@ const MovieBlock = styled.div`
 `;
 
 const MovieArticle = styled.article`
-  width: 92%;
   display: flex;
   justify-content: center;
+  width: 100%;
+  padding: 0 4%;
 `;
 
 const MoviePoster = styled.div`
@@ -59,6 +61,7 @@ const PosterImage = styled.img`
 const MovieData = styled.dl`
   flex-grow: 1;
   padding: 3% 0;
+  color: #000;
 `;
 
 const MovieTitle = styled.dt`
@@ -118,19 +121,6 @@ const MovieSummary = styled.dd`
   }   
 `;
 
-const SummaryButton = styled.button`
-  position: relative;
-  top: 5px;
-  left: 10px;
-  width: 40px;
-  height: 20px;
-  border: none;
-  border-radius: 10px;
-  font-size: 20px;
-  color: gray;
-  background-color: #efefef;
-`;
-
 function Movie({ year, title, summary, poster, genres, rating }) {
 
     // 별점 기준 : 정수와 상관없이 소수점이 0.5가 넘으면 0.5로, 0.5가 안되면 0.0으로 취급한다. 예) 4.75 -> 4.5, 3.2 -> 3.0
@@ -149,44 +139,45 @@ function Movie({ year, title, summary, poster, genres, rating }) {
         emptyStars.push('');
     }
 
-    const [leftSummary, setLeftSummary] = useState(false);
-    const onClick = () => {
-        setLeftSummary(!leftSummary);
-    }
-
     return(
         <MovieBlock>
-            <MovieArticle>
-                <MoviePoster>
-                    <PosterImage src={poster} alt={title} title={title} />
-                </MoviePoster>
-                <MovieData>
-                    <MovieTitle>{title}</MovieTitle>
-                    <MovieYear>{year}</MovieYear>
-                    <MovieGenres>{genres.join(', ')}</MovieGenres>
-                    <MovieRating>
-                        <Stars>
-                            {fullStars.map((star, index) => (<IoIosStar key={index} />))}
-                            {decimal && <IoIosStarHalf />}
-                            {emptyStars.map((star, index) => (<IoIosStarOutline key={index} />))}
-                        </Stars>
-                        <strong>
-                            {rating}
-                        </strong>
-                    </MovieRating>
-                    <MovieSummary>
-                        <p>
-                            <span>{summary.slice(0, 200)}</span>
-                            {summary.length > 200 && !leftSummary &&
-                                <SummaryButton onClick={onClick}>
-                                    <IoIosMore />
-                                 </SummaryButton>}
-                            {leftSummary && summary.slice(201)}
-                        </p>
-                    </MovieSummary>
-                </MovieData>
-            </MovieArticle>
+            <Link to={{
+                pathname: "/movie-detail",
+                state: {
+                    year,
+                    title,
+                    summary,
+                    poster,
+                    genres,
+                    rating
+                }
+            }} >
+                <MovieArticle>
+                    <MoviePoster>
+                        <PosterImage src={poster} alt={title} title={title} />
+                    </MoviePoster>
+                    <MovieData>
+                        <MovieTitle>{title}</MovieTitle>
+                        <MovieYear>{year}</MovieYear>
+                        <MovieGenres>{genres.join(', ')}</MovieGenres>
+                        <MovieRating>
+                            <Stars>
+                                {fullStars.map((star, index) => (<IoIosStar key={index} />))}
+                                {decimal && <IoIosStarHalf />}
+                                {emptyStars.map((star, index) => (<IoIosStarOutline key={index} />))}
+                            </Stars>
+                            <strong>
+                                {rating}
+                            </strong>
+                        </MovieRating>
+                        <MovieSummary>
+                            <p>{summary.slice(0, 200)} ... </p>
+                        </MovieSummary>
+                    </MovieData>
+                </MovieArticle>
+            </Link>
         </MovieBlock>
+
     );
 }
 

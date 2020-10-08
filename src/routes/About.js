@@ -15,7 +15,7 @@ const Container = styled.div`
   & .about-title{
     font-weight: 600;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
   }
   & .about-description{
     font-size: 15px;
