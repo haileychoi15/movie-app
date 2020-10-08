@@ -8,18 +8,19 @@ const MovieBlock = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin: 0 2% 70px;
+  margin: 0 5% 70px;
   border-radius: 6px;
   background: #fff;
   box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.3);
-  transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;  
+  
   &:hover{
     transform: translateY(-10px);
     box-shadow: 0 18px 32px -5px rgba(50, 50, 93, 0.6);
   }         
               
   @media only screen and (min-width: 900px) {
-    width: 46%;
+    width: 40%;
     margin-bottom: 100px;
   }
 `;
@@ -60,7 +61,7 @@ const PosterImage = styled.img`
 
 const MovieData = styled.dl`
   flex-grow: 1;
-  padding: 3% 0;
+  padding: 5% 0;
   color: #000;
 `;
 
@@ -104,24 +105,24 @@ const Stars = styled.span`
 `;
 
 const MovieSummary = styled.dd`
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 300;
   color: gray;
   @media only screen and (min-width: 480px) {
-    font-size: 14px;
+    font-size: 13px;
   }
   @media only screen and (min-width: 768px) {
-    font-size: 16px;
+    font-size: 15px;
   }
   @media only screen and (min-width: 900px) {
-    font-size: 14px;
+    font-size: 13px;
   }
   @media only screen and (min-width: 1200px) {
-    font-size: 16px;
+    font-size: 15px;
   }   
 `;
 
-function Movie({ year, title, summary, poster, genres, rating }) {
+function Movie({ id, year, title, summary, poster, genres, rating, runtime }) {
 
     // 별점 기준 : 정수와 상관없이 소수점이 0.5가 넘으면 0.5로, 0.5가 안되면 0.0으로 취급한다. 예) 4.75 -> 4.5, 3.2 -> 3.0
     const fiveStarRating = (rating/2);
@@ -142,14 +143,15 @@ function Movie({ year, title, summary, poster, genres, rating }) {
     return(
         <MovieBlock>
             <Link to={{
-                pathname: "/movie-detail",
+                pathname: `/movie/${id}`,
                 state: {
                     year,
                     title,
                     summary,
                     poster,
                     genres,
-                    rating
+                    rating,
+                    runtime
                 }
             }} >
                 <MovieArticle>
@@ -171,7 +173,9 @@ function Movie({ year, title, summary, poster, genres, rating }) {
                             </strong>
                         </MovieRating>
                         <MovieSummary>
-                            <p>{summary.slice(0, 200)} ... </p>
+                            <p>
+                                {summary.slice(0, 200) + (summary.length > 200 && ' ... ')}
+                            </p>
                         </MovieSummary>
                     </MovieData>
                 </MovieArticle>

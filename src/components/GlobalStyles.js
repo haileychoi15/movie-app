@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     background: #eff3f7;
     height: 100%;
+    padding: 0 4%;
     font-family: 'Noto Sans JP', sans-serif;
   }
   
