@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from "styled-components";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import Stars from "../components/Stars";
 
 const DetailContainer = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ const DetailContainer = styled.div`
     opacity: 0;
   }
   dd {
-  margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   @media only screen and (min-width: 768px) {
     flex-direction: row;
@@ -61,14 +62,19 @@ const DetailYear = styled.div`
   opacity: 0.8;
 `;
 
-const DetailInfo = styled.div`
-  font-size: 20px;
-  font-weight: 400;
-`;
-
 const DetailRating = styled.div`
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
+  dd {
+    display: inline-block;
+    font-size: 26px;
+  }
+`;
+
+const DetailInfo = styled.div`
+  opacity: 0.8;
+  font-size: 20px;
+  font-weight: 400;
 `;
 
 const DetailSummary = styled.div`
@@ -112,40 +118,46 @@ function Detail (props) {
     if(location.state) {
         const { year, title, summary, poster, genres, rating, runtime } = location.state;
         return (
-                <Link to="/">
-                <DetailContainer>
-                    <DetailPoster>
-                        <img src={poster} alt={title} title={title} />
-                    </DetailPoster>
-                    <DetailData>
-                        <dl>
-                            <DetailTitle>
-                                <dt>title : </dt>
-                                <dd>{title}</dd>
-                            </DetailTitle>
-                            <DetailYear>
-                                <dt>year : </dt>
-                                <dd>{year}</dd>
-                            </DetailYear>
-                            <DetailInfo>
-                                <dt>genres : </dt>
-                                <dd>{genres.join(' ')}</dd>
-                            </DetailInfo>
-                            <DetailInfo>
-                                <dt>runtime : </dt>
-                                <dd>{runtime} minutes</dd>
-                            </DetailInfo>
-                            <DetailSummary>
-                                <dt>summary : </dt>
-                                <dd>{summary}</dd>
-                            </DetailSummary>
-                        </dl>
+            <DetailContainer>
+                <DetailPoster>
+                    <img src={poster} alt={title} title={title} />
+                </DetailPoster>
+                <DetailData>
+                    <dl>
+                        <DetailTitle>
+                            <dt>title : </dt>
+                            <dd>{title}</dd>
+                        </DetailTitle>
+                        <DetailYear>
+                            <dt>year : </dt>
+                            <dd>{year}</dd>
+                        </DetailYear>
+                        <DetailRating>
+                            <dt>rating : </dt>
+                            <dd>
+                                <Stars className="starIcons" rating={rating} />
+                            </dd>
+                        </DetailRating>
+                        <DetailInfo>
+                            <dt>genres : </dt>
+                            <dd>{genres.join(' ')}</dd>
+                        </DetailInfo>
+                        <DetailInfo>
+                            <dt>runtime : </dt>
+                            <dd>{runtime} minutes</dd>
+                        </DetailInfo>
+                        <DetailSummary>
+                            <dt>summary : </dt>
+                            <dd>{summary}</dd>
+                        </DetailSummary>
+                    </dl>
+                    <Link to="/">
                         <BackButton>
                             <RiArrowGoBackLine />
                         </BackButton>
-                    </DetailData>
-                </DetailContainer>
-                </Link>
+                    </Link>
+                </DetailData>
+            </DetailContainer>
         );
     }
     else {

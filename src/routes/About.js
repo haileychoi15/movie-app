@@ -13,9 +13,10 @@ const Container = styled.div`
   background-color: rgba(255, 100, 80, 0.9);
   box-shadow: 0 18px 23px -8px rgba(50, 50, 93, 0.5);
   & .about-title{
+    font-size: 18px;
     font-weight: 600;
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   & .about-description{
     font-size: 15px;

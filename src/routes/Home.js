@@ -30,9 +30,8 @@ function Home() {
     });
 
     useEffect(() => {
-        getMovies().then(
-            () => setScroll(false)
-        );
+        getMovies().then();
+        //return () => setScroll(false);
     }, []);
 
     return (
