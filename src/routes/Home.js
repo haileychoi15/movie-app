@@ -25,13 +25,14 @@ function Home() {
         setLoading(false);
     }
 
-    window.addEventListener('scroll', () => {
+    const isScrolled = () => {
         window.scrollY > 500 ? setScroll(true) : setScroll(false);
-    });
+    }
 
     useEffect(() => {
         getMovies().then();
-        //return () => setScroll(false);
+        window.addEventListener('scroll', isScrolled);
+        return () => window.removeEventListener('scroll', isScrolled);
     }, []);
 
     return (
